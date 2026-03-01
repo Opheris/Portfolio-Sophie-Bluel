@@ -1,0 +1,29 @@
+# Node modules
+node_modules/
+npm-debug.log*
+
+# Environment variables
+.env
+
+# Images téléchargées
+Backend/images/*
+!Backend/images/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database
+*.sqlite
+*.db
