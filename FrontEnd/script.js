@@ -5,6 +5,7 @@
 
 let allWorks = [];
 let allCategories = [];
+const token = localStorage.getItem("token");
 
 // Récupération API de Works et Categories :
 
@@ -21,7 +22,7 @@ async function getWorks() {
   } catch (erreur) {
     console.error(erreur.message);
   }
-  affichageGallery();
+  renderGallery(allWorks);
 }
 
 async function getCategories() {
@@ -56,13 +57,13 @@ function newGallery(work) {
   figure.appendChild(figcaption);
 }
 
-function affichageGallery() {
+function renderGallery(works) {
   const sectionGallery = document.querySelector(".gallery");
 
   sectionGallery.innerHTML = "";
 
-  for (let i = 0; i < allWorks.length; i++) {
-    newGallery(allWorks[i]);
+  for (let i = 0; i < works.length; i++) {
+    newGallery(works[i]);
   }
 }
 
@@ -76,30 +77,22 @@ function buttonCategories() {
   // Création des bouttons des catégories au DOM
 
   const buttonTous = document.createElement("button");
-  // const buttonObjets = document.createElement("button");
-  // const buttonAppartements = document.createElement("button");
-  // const buttonHotelsRestaurants = document.createElement("button");
 
   // Ajout des classes
 
   buttonTous.classList.add("filter-btn");
-  // buttonObjets.classList.add("filter-btn");
-  // buttonAppartements.classList.add("filter-btn");
-  // buttonHotelsRestaurants.classList.add("filter-btn");
 
   // Ajout du texte
 
   buttonTous.textContent = "Tous";
-  // buttonObjets.textContent = "Objets";
-  // buttonAppartements.textContent = "Appartements";
-  // buttonHotelsRestaurants.textContent = "Hôtels et Restaurants";
 
   // Ajout au DOM
 
   sectionFilters.appendChild(buttonTous);
-  // sectionFilters.appendChild(buttonObjets);
-  // sectionFilters.appendChild(buttonAppartements);
-  // sectionFilters.appendChild(buttonHotelsRestaurants);
+
+  buttonTous.addEventListener("click", function () {
+    renderGallery(allWorks);
+  });
 
   for (let i = 0; i < allCategories.length; i++) {
     const category = allCategories[i];
@@ -108,7 +101,18 @@ function buttonCategories() {
     button.textContent = category.name;
 
     sectionFilters.appendChild(button);
+    button.addEventListener("click", function () {
+      // console.log(category.id);
+      let filteredWorks = allWorks.filter(function (work) {
+        return work.categoryId === category.id;
+      });
+      renderGallery(filteredWorks);
+    });
   }
+}
 
-  button.addEventListener("click",)
+// MODE ÉDITION :
+
+if (token) {
+  document.body.classList.add("edit-mode");
 }
