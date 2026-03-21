@@ -12,9 +12,10 @@ function loginForm() {
       const passwordInput = document.querySelector('input[name="password"]');
 
       const email = emailInput.value.trim();
-      const password = passwordInput.value;
+      const password = passwordInput.value.trim();
 
-      if (!email || !password) {
+      // if (!email || !password) {
+      if (email.length === 0 || password.length === 0) {
         if (errorMessage) {
           errorMessage.textContent = "Veuillez remplir tous les champs.";
         }
@@ -42,7 +43,7 @@ function loginForm() {
 
         const data = await response.json();
         localStorage.setItem("token", data.token);
-        window.location.href = "index.html";
+        window.location.href = "/";
       } catch (error) {
         if (errorMessage) {
           errorMessage.textContent =
@@ -55,4 +56,3 @@ function loginForm() {
 }
 
 loginForm();
-
